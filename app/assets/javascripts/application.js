@@ -9,7 +9,9 @@
 //
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+//= require popper.min
+//= require holder.min
+//= require jquery-slim.min
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks

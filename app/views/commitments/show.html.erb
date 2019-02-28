@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @commitment.action %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @commitment.content %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @commitment.start_date %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @commitment.due_date %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @commitment.user %>
+</p>
+
+<p>
+  <strong>Initiative:</strong>
+  <%= @commitment.initiative %>
+</p>
+
+<%= link_to 'Edit', edit_commitment_path(@commitment) %> |
+<%= link_to 'Back', commitments_path %>

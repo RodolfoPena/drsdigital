@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  action: MyString
+  content: MyText
+  start_date: 2019-02-28
+  due_date: 2019-02-28
+  user: one
+  initiative: one
+
+two:
+  action: MyString
+  content: MyText
+  start_date: 2019-02-28
+  due_date: 2019-02-28
+  user: two
+  initiative: two
