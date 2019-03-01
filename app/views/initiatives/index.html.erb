@@ -4,8 +4,14 @@
   <h1>Iniciativas</h1>
   <p class="lead">Iniciativas de mejora para los distintos procesos con foco en procesos estructurados, recolección de datos, precesamiento de datos, y análisis de datos</p>
 
-<%= link_to 'Nueva Iniciativa', new_initiative_path, class: 'btn btn-primary' %>
-<%= link_to 'Volver', pages_home_path, class: 'btn btn-outline-dark' %>
+    <div class="col-auto">
+      <h4>Agregar iniciativa</h4>
+      <%= button_to new_initiative_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#initiative-add-modal'} do %>
+        <i class="material-icons">add</i>
+      <% end %>
+      <%= render 'initiatives/new' %>
+    </div>
+
 
 <div class="row">
     <div class="col-md-4">
@@ -26,7 +32,7 @@
     <div class="col-md-2">
       <center>
       <i class="material-icons">add_to_home_screen</i>
-      <h5>Automatización <br> de Datos</h5>
+      <h5>Automatización <br> de Procesos</h5>
       </center>
     </div>
     <div class="col-md-2">
@@ -146,7 +152,4 @@
     </div>
   </div>
   <% end %>
-
-
-
-    </div> <!-- /container -->
+</div> <!-- /container -->

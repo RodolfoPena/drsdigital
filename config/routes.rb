@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
-  resources :commitments
+  namespace :pages do
+    get 'home'
+  end
   resources :initiatives
+  resources :commitments
   devise_for :users
   root to: 'pages#home'
-
-  namespace :pages do
-  get 'home'
-  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

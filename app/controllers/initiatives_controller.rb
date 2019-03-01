@@ -6,6 +6,7 @@ class InitiativesController < ApplicationController
   # GET /initiatives.json
   def index
     @initiatives = Initiative.all
+    @initiative = Initiative.new
   end
 
   # GET /initiatives/1
@@ -29,11 +30,9 @@ class InitiativesController < ApplicationController
     @initiative.user = current_user
     respond_to do |format|
       if @initiative.save
-        format.html { redirect_to @initiative, notice: 'Initiative was successfully created.' }
-        format.json { render :show, status: :created, location: @initiative }
+        format.html { redirect_to initiatives_path, notice: 'Initiative was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @initiative.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,10 +43,8 @@ class InitiativesController < ApplicationController
     respond_to do |format|
       if @initiative.update(initiative_params)
         format.html { redirect_to @initiative, notice: 'Initiative was successfully updated.' }
-        format.json { render :show, status: :ok, location: @initiative }
       else
         format.html { render :edit }
-        format.json { render json: @initiative.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,7 +55,6 @@ class InitiativesController < ApplicationController
     @initiative.destroy
     respond_to do |format|
       format.html { redirect_to initiatives_url, notice: 'Initiative was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
@@ -70,6 +66,6 @@ class InitiativesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def initiative_params
-      params.require(:initiative).permit(:title, :description, :user_id)
+      params.require(:initiative).permit(:title, :description)
     end
 end

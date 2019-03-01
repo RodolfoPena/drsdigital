@@ -1,4 +1,4 @@
-<%= form_with(model: initiative, local: true) do |form| %>
+<%= form_with model: @initiative, url: initiatives_path, remote: true,  class: "modal fade", id: "initiative-add-modal", tabindex: "-1", role: "dialog", 'aria-labelledby': "team-add-modal", 'aria-hidden': "true"  do |form| %>
   <% if initiative.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(initiative.errors.count, "error") %> prohibited this initiative from being saved:</h2>

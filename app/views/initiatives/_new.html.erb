@@ -1,0 +1,28 @@
+<%= form_with model: @initiative, url: initiatives_path, remote: true, class: "modal fade", id: "initiative-add-modal", tabindex: "-1", role: "dialog", 'aria-labelledby': "initiative-add-modal", 'aria-hidden': "true"  do |form| %>
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Nueva iniciativa</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <%= form.label  :title, 'Titulo' %>
+        <%= form.text_field :title, class: 'form-control' %>
+      </div>
+
+      <div class="field">
+        <%= form.label :description, 'Descripción' %>
+        <%= form.text_area :description, class: 'form-control' %>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+      <%= form.submit 'guardar', class:'btn btn-primary' %> 
+    </div>
+  </div>
+</div>
+<% end %>
