@@ -19,13 +19,24 @@ h3 {
   margin-bottom: 0;
 }
 [class*="col-"] {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  background-color: rgba(86, 61, 124, .15);
-  border: 1px solid rgba(86, 61, 124, .2);
+  padding: 0px;
 }
 
 hr {
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+
+.btn-options {
+  color: #6c757d;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center; }
+
+  .card-body .card-options {
+  position: absolute;
+  top: 1.5rem;
+  right: 0.75rem; }

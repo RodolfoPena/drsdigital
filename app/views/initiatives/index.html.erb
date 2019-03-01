@@ -1,148 +1,152 @@
-
+<%= render 'shared/navbar'%>
 <p id="notice"><%= notice %></p>
 <div class="container">
-  <h1>Matriz de Iniciativas</h1>
+  <h1>Iniciativas</h1>
   <p class="lead">Iniciativas de mejora para los distintos procesos con foco en procesos estructurados, recolección de datos, precesamiento de datos, y análisis de datos</p>
 
-  <h2>Five grid tiers</h2>
-  <p>There are five tiers to the Bootstrap grid system, one for each range of devices we support. Each tier starts at a minimum viewport size and automatically applies to the larger devices unless overridden.</p>
-<h1>Procesos</h1>
+<%= link_to 'Nueva Iniciativa', new_initiative_path, class: 'btn btn-primary' %>
+<%= link_to 'Volver', pages_home_path, class: 'btn btn-outline-dark' %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Título</th>
-      <th>Creado por:</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="row">
+    <div class="col-md-4">
 
-  <tbody>
-    <% @initiatives.each do |initiative| %>
-      <tr>
-        <td data-toggle="tooltip" data-placement="top" data-html="true" title="<p><%= initiative.description %></p>" ><%= initiative.title %></td>
-        <td><%= initiative.user.email %></td>
-        <td><%= link_to 'Show', initiative %></td>
-        <td><%= link_to 'Edit', edit_initiative_path(initiative) %></td>
-        <td><%= link_to 'Destroy', initiative, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'Nuevo proceso', new_initiative_path %>
-<%= link_to 'Volver', pages_home_path %>
-
-
-
-
-
-
-      <div class="row">
-        <div class="col-4">.col-4</div>
-        <div class="col-4">.col-4</div>
-        <div class="col-4">.col-4</div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm-4">.col-sm-4</div>
-        <div class="col-sm-4">.col-sm-4</div>
-        <div class="col-sm-4">.col-sm-4</div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-      </div>
-
-      <div class="row">
-        <div class="col-lg-4">.col-lg-4</div>
-        <div class="col-lg-4">.col-lg-4</div>
-        <div class="col-lg-4">.col-lg-4</div>
-      </div>
-
-      <div class="row">
-        <div class="col-xl-4">.col-xl-4</div>
-        <div class="col-xl-4">.col-xl-4</div>
-        <div class="col-xl-4">.col-xl-4</div>
-      </div>
-
-      <h2>Three equal columns</h2>
-      <p>Get three equal-width columns <strong>starting at desktops and scaling to large desktops</strong>. On mobile devices, tablets and below, the columns will automatically stack.</p>
-      <div class="row">
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-        <div class="col-md-4">.col-md-4</div>
-      </div>
-
-      <h2>Three unequal columns</h2>
-      <p>Get three columns <strong>starting at desktops and scaling to large desktops</strong> of various widths. Remember, grid columns should add up to twelve for a single horizontal block. More than that, and columns start stacking no matter the viewport.</p>
-      <div class="row">
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-6">.col-md-6</div>
-        <div class="col-md-3">.col-md-3</div>
-      </div>
-
-      <h2>Two columns</h2>
-      <p>Get two columns <strong>starting at desktops and scaling to large desktops</strong>.</p>
-      <div class="row">
-        <div class="col-md-8">.col-md-8</div>
-        <div class="col-md-4">.col-md-4</div>
-      </div>
-
-      <h2>Full width, single column</h2>
-      <p class="text-warning">No grid classes are necessary for full-width elements.</p>
-
-      <hr>
-
-      <h2>Two columns with two nested columns</h2>
-      <p>Per the documentation, nesting is easy—just put a row of columns within an existing column. This gives you two columns <strong>starting at desktops and scaling to large desktops</strong>, with another two (equal widths) within the larger column.</p>
-      <p>At mobile device sizes, tablets and down, these columns and their nested columns will stack.</p>
-      <div class="row">
-        <div class="col-md-8">
-          .col-md-8
-          <div class="row">
-            <div class="col-md-6">.col-md-6</div>
-            <div class="col-md-6">.col-md-6</div>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <i class="material-icons">device_hub</i>
+      <h5>Estandarización <br>de Procesos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <i class="material-icons">cloud_upload</i>
+      <h5>Recolección <br>de Datos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <i class="material-icons">add_to_home_screen</i>
+      <h5>Automatización <br> de Datos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <i class="material-icons">pie_chart</i>
+      <h5>Análisis <br>de Datos</h5>
+      </center>
+    </div>
+</div>
+<% @initiatives.each do |initiative| %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card text-white bg-dark h-100">
+        <div class="card-body">
+          <div class="dropdown card-options">
+            <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+              <%= link_to 'Show', initiative, class:'dropdown-item' %>
+              <%= link_to 'Edit', edit_initiative_path(initiative), class:'dropdown-item'  %>
+              <%= link_to 'Destroy', initiative, method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+            </div>
           </div>
+          <h5 class="card-title"><%= initiative.title %></h5>
+          <p class="card-text"><%= initiative.description %></p>
         </div>
-        <div class="col-md-4">.col-md-4</div>
       </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Informe de gestión mejorado</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
 
-      <hr>
 
-      <h2>Mixed: mobile and desktop</h2>
-      <p>The Bootstrap v4 grid system has five tiers of classes: xs (extra small), sm (small), md (medium), lg (large), and xl (extra large). You can use nearly any combination of these classes to create more dynamic and flexible layouts.</p>
-      <p>Each tier of classes scales up, meaning if you plan on setting the same widths for xs and sm, you only need to specify xs.</p>
-      <div class="row">
-        <div class="col-12 col-md-8">.col-12 .col-md-8</div>
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-        <div class="col-6 col-md-4">.col-6 .col-md-4</div>
-      </div>
-      <div class="row">
-        <div class="col-6">.col-6</div>
-        <div class="col-6">.col-6</div>
-      </div>
-
-      <hr>
-
-      <h2>Mixed: mobile, tablet, and desktop</h2>
-      <p></p>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-lg-8">.col-12 .col-sm-6 .col-lg-8</div>
-        <div class="col-6 col-lg-4">.col-6 .col-lg-4</div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
-        <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
-        <div class="col-6 col-sm-4">.col-6 .col-sm-4</div>
-      </div>
 
     </div> <!-- /container -->
