@@ -1,6 +1,6 @@
 <%= form_with model: @initiative, url: initiatives_path, remote: true, class: "modal fade", id: "initiative-add-modal", tabindex: "-1", role: "dialog", 'aria-labelledby': "initiative-add-modal", 'aria-hidden': "true"  do |form| %>
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <div class="modal-content">
+<div class="modal-dialog modal-dialog-centered" role="document" >
+  <div class="modal-content" style="height:400px">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalCenterTitle">Nueva iniciativa</h5>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -8,20 +8,52 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="field">
-        <%= form.label  :title, 'Titulo' %>
-        <%= form.text_field :title, class: 'form-control' %>
-      </div>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="basic-info-initiative-tab" data-toggle="tab" href="#basic-info-initiative" role="tab" aria-controls="home" aria-selected="true">Detalles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="responsible-initiative-tab" data-toggle="tab" href="#responsible-initiative" role="tab" aria-controls="profile" aria-selected="false">Responsable</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="basic-info-initiative" role="tabpanel" aria-labelledby="basic-info-initiative-tab">
+          <div class="container">
+            <br>
+            <div class="field">
+              <%= form.label  :title, 'Titulo' %>
+              <%= form.text_field :title, class: 'form-control' %>
+            </div>
+            <div class="field">
+              <%= form.label :description, 'Descripción' %>
+              <%= form.text_area :description, class: 'form-control' %>
+            </div>
+          </div>
 
-      <div class="field">
-        <%= form.label :description, 'Descripción' %>
-        <%= form.text_area :description, class: 'form-control' %>
+        </div>
+        <div class="tab-pane fade" id="responsible-initiative" role="tabpanel" aria-labelledby="responsible-initiative-tab">
+          <div class="container">
+            <br>
+            <div class="form-group-users">
+                <% @users.each do |user| %>
+                <div class="custom-control custom-radio">
+                  <%= form.radio_button :responsible_id , user.id, id:"add-initiative-responsible-#{user.id}", class:'custom-control-input' %>
+                  <label class="custom-control-label" for="add-initiative-responsible-<%= user.id %>">
+                    <div class="d-flex align-items-center">
+                      <%= image_tag user_avatar(user.id), class:'avatar-sm mr-2' %>
+                      <span class="h6 mb-0" data-filter-by="text"><%= user.email%></span>
+                    </div>
+                  </label>
+                </div>
+                <% end %>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
-      <%= form.submit 'guardar', class:'btn btn-primary' %> 
+      <%= form.submit 'Crear', class:'btn btn-primary' %>
     </div>
   </div>
 </div>

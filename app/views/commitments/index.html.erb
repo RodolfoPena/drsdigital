@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Action</th>
-      <th>Content</th>
+      <th>deliverable</th>
       <th>Start date</th>
       <th>Due date</th>
       <th>User</th>
@@ -19,7 +19,7 @@
     <% @commitments.each do |commitment| %>
       <tr>
         <td><%= commitment.action %></td>
-        <td><%= commitment.content %></td>
+        <td><%= commitment.deliverable %></td>
         <td><%= commitment.start_date %></td>
         <td><%= commitment.due_date %></td>
         <td><%= commitment.user %></td>

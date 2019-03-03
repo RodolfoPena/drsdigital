@@ -7,6 +7,15 @@ class InitiativesController < ApplicationController
   def index
     @initiatives = Initiative.all
     @initiative = Initiative.new
+    @users = User.all
+    if params[:filter] == 0
+      @filter = [true, false]
+    elsif params[:filter] == 1
+      @filter = true
+    elsif params[:filter] == 2
+      @filter = false
+    end
+
   end
 
   # GET /initiatives/1
@@ -28,6 +37,7 @@ class InitiativesController < ApplicationController
   def create
     @initiative = Initiative.new(initiative_params)
     @initiative.user = current_user
+    @initiative.responsible_id = User.find(params[:initiative][:responsible_id])
     respond_to do |format|
       if @initiative.save
         format.html { redirect_to initiatives_path, notice: 'Initiative was successfully created.' }
@@ -66,6 +76,6 @@ class InitiativesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def initiative_params
-      params.require(:initiative).permit(:title, :description)
+      params.require(:initiative).permit(:title, :description, :filter)
     end
 end

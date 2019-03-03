@@ -3,153 +3,155 @@
 <div class="container">
   <h1>Iniciativas</h1>
   <p class="lead">Iniciativas de mejora para los distintos procesos con foco en procesos estructurados, recolección de datos, precesamiento de datos, y análisis de datos</p>
+  <div class="col-auto" style="display:inline-flex">
+    <h4 class="mr-2">Agregar iniciativa</h4>
+    <%= button_to new_initiative_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#initiative-add-modal'} do %>
+    <i class="material-icons">add</i>
+    <% end %>
+    <%= render 'initiatives/new' %>
+    <br>
+    <div class="row" style="display:inline">
+      <div class="col-md-4">
 
-    <div class="col-auto">
-      <h4>Agregar iniciativa</h4>
-      <%= button_to new_initiative_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#initiative-add-modal'} do %>
-        <i class="material-icons">add</i>
-      <% end %>
-      <%= render 'initiatives/new' %>
-    </div>
 
-
-<div class="row">
-    <div class="col-md-4">
-
-    </div>
-    <div class="col-md-2">
-      <center>
-      <i class="material-icons">device_hub</i>
-      <h5>Estandarización <br>de Procesos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-      <i class="material-icons">cloud_upload</i>
-      <h5>Recolección <br>de Datos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-      <i class="material-icons">add_to_home_screen</i>
-      <h5>Automatización <br> de Procesos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-      <i class="material-icons">pie_chart</i>
-      <h5>Análisis <br>de Datos</h5>
-      </center>
-    </div>
-</div>
-<% @initiatives.each do |initiative| %>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="card text-white bg-dark h-100">
-        <div class="card-body">
-          <div class="dropdown card-options">
-            <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="material-icons">more_vert</i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right">
-              <%= link_to 'Show', initiative, class:'dropdown-item' %>
-              <%= link_to 'Edit', edit_initiative_path(initiative), class:'dropdown-item'  %>
-              <%= link_to 'Destroy', initiative, method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
-            </div>
-          </div>
-          <h5 class="card-title"><%= initiative.title %></h5>
-          <p class="card-text"><%= initiative.description %></p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-body">
-          <p class="card-text">Informe de gestión mejorado</p>
-        </div>
       </div>
     </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <%# <%= form_tag [@initiative], method: 'get' do %> %>
+          <%# <%= select_tag :filter, options_for_select([['Todos', 0],['Solo entregables', 1],['Solo compromisos', 2]]), {prompt: 'Filtro', class:'form-control', onchange: 'this.form.submit();'} %> %>
+        <%# <% end %> %>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <center>
+        <i class="material-icons">device_hub</i>
+        <h5>Estandarización <br>de Procesos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+        <i class="material-icons">cloud_upload</i>
+        <h5>Recolección <br>de Datos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+        <i class="material-icons">add_to_home_screen</i>
+        <h5>Automatización <br> de Procesos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+        <i class="material-icons">pie_chart</i>
+        <h5>Análisis <br>de Datos</h5>
+      </center>
+    </div>
+  </div>
+  <% @initiatives.each do |initiative| %>
+  <div class="row" style="background-color:lightgray">
+    <div class="col-md-4">
+      <div class="initiative">
+        <div class="card bg-light h-100">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', initiative, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_initiative_path(initiative), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', initiative, method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <h5 class="card-title"><%= initiative.title %></h5>
+            <p class="card-text"><%= initiative.description %></p>
+            <div class="mb-1">
+              <div class="col-auto" style="display:inline-flex">
+                <%= button_to 'Nuevo compromiso', new_initiative_commitment_path(initiative.id), remote:true, class:'btn btn-sm btn-dark', data: {toggle:'modal', target:"#initiative-#{initiative.id}-commitment-add-modal"}  %>
+                <%= render partial: 'initiatives/commitments/new', locals: {initiative: initiative}%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <% initiative.commitments.where(stage: 0).each do |commitment| %>
+      <div class="commitment">
+        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="btn-sm">
+                    <i class="material-icons">more_vert</i>
+                </div>
+
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_initiative_commitment_path(initiative, commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', initiative_commitment_path(initiative, commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-text"><%= commitment.action %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
+            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <% initiative.commitments.where(stage: 1).each do |commitment| %>
+      <div class="commitment">
+        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+          <div class="card-body">
+            <p class="card-text"><%= commitment.action %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
+            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <% initiative.commitments.where(stage: 2).each do |commitment| %>
+      <div class="commitment">
+        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+          <div class="card-body">
+            <p class="card-text"><%= commitment.action %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
+            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2">
+      <% initiative.commitments.where(stage: 3).each do |commitment| %>
+      <div class="commitment">
+        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+          <div class="card-body">
+            <p class="card-text"><%= commitment.action %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
+            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
   <% end %>
-</div> <!-- /container -->
+</div>

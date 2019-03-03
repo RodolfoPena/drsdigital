@@ -1,0 +1,83 @@
+<%= form_with model: [initiative, Commitment.new], url: initiative_commitments_path(initiative.id), remote: true, class: "modal fade", id: "initiative-#{initiative.id}-commitment-add-modal", tabindex: "-1", role: "dialog", 'aria-labelledby': "initiative-#{initiative.id}-commitment-add-modal", 'aria-hidden': "true"  do |form| %>
+<div class="modal-dialog modal-dialog-centered" role="document" >
+  <div class="modal-content" style="height:650px">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalCenterTitle">Nuevo Compromiso <%= initiative.id %></h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="basic-info-initiative-<%= initiative.id %>-commitment-tab" data-toggle="tab" href="#basic-info-initiative-<%= initiative.id %>-commitment" role="tab" aria-controls="home" aria-selected="true">Detalles</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="responsible-initiative-<%= initiative.id %>-commitment-tab" data-toggle="tab" href="#responsible-initiative-<%= initiative.id %>-commitment" role="tab" aria-controls="profile" aria-selected="false">Responsable</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="basic-info-initiative-<%= initiative.id %>-commitment" role="tabpanel" aria-labelledby="basic-info-initiative-<%= initiative.id %>-commitment-tab">
+          <div class="container">
+            <br>
+            <div class="form-group">
+              <%= form.label  :action, 'Titulo' %>
+              <%= form.text_field :action, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= form.label :content, 'Condiciones de satisfacción' %>
+              <%= form.text_area :content, class: 'form-control' %>
+            </div>
+            <div class="form-group">
+              <%= form.label :due_date, 'Fecha de término' %>
+              <%= form.date_field :due_date, class: 'form-control', require: true %>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col">
+                  <div class="custom-control custom-radio">
+                    <%= form.check_box :deliverable, {checked:false, class:'custom-control-input', id:"initiative-#{initiative.id}-commitment-deliverable-option"}, nil %>
+                    <label class="custom-control-label" for="initiative-<%= initiative.id %>-commitment-deliverable-option">Entregable</label>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="custom-control custom-radio">
+                    <%= form.check_box :critical, {checked:false, class:'custom-control-input', id:"initiative-#{initiative.id}-commitment-critical-option"}, nil %>
+                    <label class="custom-control-label" for="initiative-<%= initiative.id %>-commitment-critical-option">Crítico</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Etapa</label>
+              <%= form.select :stage, options_for_select([['Estandarización de procesos',0], ['Recolección de datos', 1], ['Automatización de procesos',2], ['Análisis de datos',3]]), {prompt: 'Seleccionar', require:true}, :class => 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="responsible-initiative-<%= initiative.id %>-commitment" role="tabpanel" aria-labelledby="responsible-initiative-<%= initiative.id %>-commitment-tab">
+          <div class="container">
+            <br>
+            <div class="form-group-users">
+                <% @users.each do |user| %>
+                <div class="custom-control custom-radio">
+                  <%= form.radio_button :responsible_id , user.id, id:"add-initiative-#{initiative.id}-commitment-responsible-#{user.id}", class:'custom-control-input' %>
+                  <label class="custom-control-label" for="add-initiative-<%= initiative.id %>-commitment-responsible-<%= user.id %>">
+                    <div class="d-flex align-items-center">
+                      <%= image_tag user_avatar(user.id), class:'avatar-sm mr-2' %>
+                      <span class="h6 mb-0" data-filter-by="text"><%= user.email%></span>
+                    </div>
+                  </label>
+                </div>
+                <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      <%= form.submit 'Crear', class:'btn btn-primary' %>
+    </div>
+  </div>
+</div>
+<% end %>
