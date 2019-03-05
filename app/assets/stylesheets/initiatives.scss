@@ -37,23 +37,39 @@ hr {
   align-items: center;
 
   .btn-sm {
-
     .material-icons {
       font-size: 20px !important;
+      position: absolute;
+      margin-left: 50px !important;
     }
 
   }
 }
+.initiative {
+  .card-body .card-options {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.75rem;
+    height: 100% !important
+  }
 
-.card-body .card-options {
-  position: absolute;
-  top: 1.5rem;
-  right: 0.75rem;
+    .card {
+      border-radius: 0%;
+      border:none;
+      height: 100% !important;
+
+      .card-footer {
+          background-color: #f8f9fa !important;
+          border:none;
+      }
+    }
+
+    h6 + .btn.round {
+      margin-left: 0.75rem;
+    }
+
 }
 
-
-  .card {
-    border-radius: 0%;
-    border:none;
-
-  }
+.button.btn.btn-round {
+  display: inline-flex;
+}

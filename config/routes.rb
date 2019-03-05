@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   namespace :pages do
     get 'home'
+    get 'dashboard'
   end
   resources :initiatives do
     resources :commitments, controller: 'initiatives/commitments'

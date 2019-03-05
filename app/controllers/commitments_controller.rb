@@ -5,6 +5,9 @@ class CommitmentsController < ApplicationController
   # GET /commitments.json
   def index
     @commitments = Commitment.all
+    @commitment = Commitment.new
+    @users = User.all
+    @initiatives = Initiative.all
   end
 
   # GET /commitments/1
@@ -25,6 +28,12 @@ class CommitmentsController < ApplicationController
   # POST /commitments.json
   def create
     @commitment = Commitment.new(commitment_params)
+    @commitment.user = current_user
+    byebug
+    @commitment.responsible_id = User.find(params[:commitment][:responsible_id].to_i).id
+    @commitment.initiative = Initiative.find(params[:commitment][:initiative_id].to_i)
+    @commitment.stage = params[:commitment][:stage].to_i
+    @commitment.start_date = Date.today
 
     respond_to do |format|
       if @commitment.save
@@ -69,6 +78,6 @@ class CommitmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commitment_params
-      params.require(:commitment).permit(:action, :content, :start_date, :due_date, :user_id, :initiative_id)
+      params.require(:commitment).permit(:action, :content, :start_date, :due_date, :deliverable, :critical)
     end
 end

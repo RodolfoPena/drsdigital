@@ -12,18 +12,13 @@
     <br>
     <div class="row" style="display:inline">
       <div class="col-md-4">
-
-
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
-        <%# <%= form_tag [@initiative], method: 'get' do %> %>
-          <%# <%= select_tag :filter, options_for_select([['Todos', 0],['Solo entregables', 1],['Solo compromisos', 2]]), {prompt: 'Filtro', class:'form-control', onchange: 'this.form.submit();'} %> %>
-        <%# <% end %> %>
+
       </div>
     </div>
     <div class="col-md-2">
@@ -54,8 +49,8 @@
   <% @initiatives.each do |initiative| %>
   <div class="row" style="background-color:lightgray">
     <div class="col-md-4">
-      <div class="initiative">
-        <div class="card bg-light h-100">
+      <div class="initiative h-100">
+        <div class="card h-100 bg-light ">
           <div class="card-body">
             <div class="dropdown card-options">
               <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,33 +58,37 @@
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <%= link_to 'Ver', initiative, class:'dropdown-item' %>
-                <%= link_to 'Editar', edit_initiative_path(initiative), class:'dropdown-item'  %>
+                <%= link_to 'Editar', edit_initiative_path(initiative), class:'dropdown-item', data: {toggle:'modal', target:"#initiative-edit-modal-#{initiative.id}" }   %>
                 <%= link_to 'Eliminar', initiative, method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
               </div>
             </div>
             <h5 class="card-title"><%= initiative.title %></h5>
             <p class="card-text"><%= initiative.description %></p>
-            <div class="mb-1">
-              <div class="col-auto" style="display:inline-flex">
-                <%= button_to 'Nuevo compromiso', new_initiative_commitment_path(initiative.id), remote:true, class:'btn btn-sm btn-dark', data: {toggle:'modal', target:"#initiative-#{initiative.id}-commitment-add-modal"}  %>
-                <%= render partial: 'initiatives/commitments/new', locals: {initiative: initiative}%>
+          </div>
+          <div class="card-footer">
+            <div class="row align-items-center">
+              <div class="col-6" style="display:inline-flex">
+                <h7 class="ml-3" style="margin-bottom:0px">Agregar compromiso</h7>
+              </div>
+              <div class="col-4">
+                <%= button_to new_initiative_commitment_path(initiative.id), remote:true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:"#initiative-#{initiative.id}-commitment-add-modal"} do  %>
+                <i class="material-icons">add</i>
+                <% end %>
               </div>
             </div>
+            <%= render partial: 'initiatives/commitments/new', locals: {initiative: initiative}%>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
       <% initiative.commitments.where(stage: 0).each do |commitment| %>
       <div class="commitment">
-        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+        <div class="card bg-light ">
           <div class="card-body">
             <div class="dropdown card-options">
               <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="btn-sm">
-                    <i class="material-icons">more_vert</i>
-                </div>
-
+                <i class="material-icons">more_vert</i>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <%= link_to 'Ver', commitment, class:'dropdown-item' %>
@@ -97,61 +96,92 @@
                 <%= link_to 'Eliminar', initiative_commitment_path(initiative, commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
               </div>
             </div>
-            <p class="card-text"><%= commitment.action %></p>
-          </div>
-          <div class="card-footer text-muted">
-            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
-            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
         </div>
       </div>
       <% end %>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="background-color:#C0C0C0">
       <% initiative.commitments.where(stage: 1).each do |commitment| %>
       <div class="commitment">
-        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+        <div class="card bg-light ">
           <div class="card-body">
-            <p class="card-text"><%= commitment.action %></p>
-          </div>
-          <div class="card-footer text-muted">
-            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
-            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_initiative_commitment_path(initiative, commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', initiative_commitment_path(initiative, commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
         </div>
       </div>
       <% end %>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="background-color:#A0A0A0">
       <% initiative.commitments.where(stage: 2).each do |commitment| %>
       <div class="commitment">
-        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+        <div class="card bg-light ">
           <div class="card-body">
-            <p class="card-text"><%= commitment.action %></p>
-          </div>
-          <div class="card-footer text-muted">
-            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
-            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_initiative_commitment_path(initiative, commitment), class:'dropdown-item' %>
+                <%= link_to 'Eliminar', initiative_commitment_path(initiative, commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
         </div>
       </div>
       <% end %>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="background-color:#808080">
       <% initiative.commitments.where(stage: 3).each do |commitment| %>
       <div class="commitment">
-        <div class="card" style="background-color:<%= status_by_color(commitment) %>">
+        <div class="card bg-light ">
           <div class="card-body">
-            <p class="card-text"><%= commitment.action %></p>
-          </div>
-          <div class="card-footer text-muted">
-            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
-            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_initiative_commitment_path(initiative, commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', initiative_commitment_path(initiative, commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
         </div>
       </div>
       <% end %>
     </div>
   </div>
+  <%= render partial: 'initiatives/edit', locals: {initiative: initiative} %>
   <% end %>
 </div>

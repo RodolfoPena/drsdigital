@@ -111,3 +111,21 @@
 
 h3 + .btn-round, h5 + .btn-round, h6 + .btn-round {
   margin-left: 0.75rem; }
+
+.edit-registration {
+  .container {
+    max-width: 960px;
+  }
+
+  .lh-condensed { line-height: 1.25; }
+
+}
+
+.modal-content {
+  height:500px;
+  .modal-body {
+    .container {
+      overflow-y: scroll !important;
+    }
+  }
+}

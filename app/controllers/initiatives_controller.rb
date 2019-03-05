@@ -15,7 +15,6 @@ class InitiativesController < ApplicationController
     elsif params[:filter] == 2
       @filter = false
     end
-
   end
 
   # GET /initiatives/1

@@ -1,37 +1,73 @@
+<%= render 'shared/navbar'%>
 <p id="notice"><%= notice %></p>
-
-<h1>Commitments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Action</th>
-      <th>deliverable</th>
-      <th>Start date</th>
-      <th>Due date</th>
-      <th>User</th>
-      <th>Initiative</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @commitments.each do |commitment| %>
-      <tr>
-        <td><%= commitment.action %></td>
-        <td><%= commitment.deliverable %></td>
-        <td><%= commitment.start_date %></td>
-        <td><%= commitment.due_date %></td>
-        <td><%= commitment.user %></td>
-        <td><%= commitment.initiative %></td>
-        <td><%= link_to 'Show', commitment %></td>
-        <td><%= link_to 'Edit', edit_commitment_path(commitment) %></td>
-        <td><%= link_to 'Destroy', commitment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Commitment', new_commitment_path %>
+<div class="container">
+  <h1>Compromisos</h1>
+  <p class="lead">Iniciativas de mejora para los distintos procesos con foco en procesos estructurados, recolección de datos, precesamiento de datos, y análisis de datos</p>
+  <div class="col-auto" style="">
+  <h4 class="mr-2">Nuevo compromiso</h4>
+  <%= button_to new_commitment_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#commitment-add-modal'} do %>
+  <i class="material-icons">add</i>
+  <% end %>
+  <%= render 'commitments/new' %>
+  <div class="row">
+    <div class="col-md-2">
+      <center>
+      <h5>Inventario</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <h5>En espera</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <h5>Esta semana</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <h5>Hoy</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <h5>Vencidos</h5>
+      </center>
+    </div>
+    <div class="col-md-2">
+      <center>
+      <h5>Cerrados</h5>
+      </center>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2 bg-light">
+      <% current_user.commitments.where(status: nil, responsible_id: current_user.id).each do |commitment| %>
+      <div class="commitment">
+        <div class="card">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <div class="btn-sm">
+                    <i class="material-icons">more_vert</i>
+                </div>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <div class="card-body">
+            <p class="card-text"><%= commitment.action %></p>
+          </div>
+          <div class="card-footer text-muted">
+            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
+            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+  </div>
+</div>

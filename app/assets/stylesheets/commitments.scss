@@ -3,17 +3,44 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .commitment {
+
   .card {
     padding: 2px;
-    margin: 3px;
+    margin:3px;
+    border:none;
+    .card-title {
+      margin-right: 1.75rem !important;
+    }
+    .card-footer {
+      background-color: #f8f9fa !important;
+      padding: 5px 0px 0px 0px !important;
+      border: none
+    }
+  }
     .card-body {
       padding: 10px;
       font-size: 12px;
     }
-    .card-footer {
-      padding: 10px;
-      font-size: 12px;
-      background-color: white;
+    .card-body .card-options  {
+      position: absolute;
+      right: 0.75rem;
+      font-size: 10px !important;
+      padding: 0px !important;
+      font-weight: 700 !important;
+
+    .material-icons {
+      font-size: 20px;
     }
   }
+}
+
+.panel {
+  .col-md-2 {
+    height: 300px;
+    overflow-y: scroll !important;
+  }
+}
+
+.show {
+
 }
