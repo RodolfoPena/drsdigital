@@ -9,43 +9,41 @@
     <i class="material-icons">add</i>
     <% end %>
     <%= render 'initiatives/new' %>
-    <br>
-    <div class="row" style="display:inline">
+  </div>
+  <div class="title">
+    <div class="row">
       <div class="col-md-4">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
+        <div class="form-group">
 
+        </div>
+      </div>
+      <div class="col-md-2">
+        <center>
+          <i class="material-icons">device_hub</i>
+          <h5>Estandarización <br>de Procesos</h5>
+        </center>
+      </div>
+      <div class="col-md-2">
+        <center>
+          <i class="material-icons">cloud_upload</i>
+          <h5>Recolección <br>de Datos</h5>
+        </center>
+      </div>
+      <div class="col-md-2">
+        <center>
+          <i class="material-icons">add_to_home_screen</i>
+          <h5>Automatización <br> de Procesos</h5>
+        </center>
+      </div>
+      <div class="col-md-2">
+        <center>
+          <i class="material-icons">pie_chart</i>
+          <h5>Análisis <br>de Datos</h5>
+        </center>
       </div>
     </div>
-    <div class="col-md-2">
-      <center>
-        <i class="material-icons">device_hub</i>
-        <h5>Estandarización <br>de Procesos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-        <i class="material-icons">cloud_upload</i>
-        <h5>Recolección <br>de Datos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-        <i class="material-icons">add_to_home_screen</i>
-        <h5>Automatización <br> de Procesos</h5>
-      </center>
-    </div>
-    <div class="col-md-2">
-      <center>
-        <i class="material-icons">pie_chart</i>
-        <h5>Análisis <br>de Datos</h5>
-      </center>
-    </div>
   </div>
+
   <% @initiatives.each do |initiative| %>
   <div class="row" style="background-color:lightgray">
     <div class="col-md-4">
@@ -57,12 +55,11 @@
                 <i class="material-icons">more_vert</i>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
-                <%= link_to 'Ver', initiative, class:'dropdown-item' %>
                 <%= link_to 'Editar', edit_initiative_path(initiative), class:'dropdown-item', data: {toggle:'modal', target:"#initiative-edit-modal-#{initiative.id}" }   %>
                 <%= link_to 'Eliminar', initiative, method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
               </div>
             </div>
-            <h5 class="card-title"><%= initiative.title %></h5>
+            <a href="<%= initiative_path(initiative)%>" style="text-decoration:none"><h5 class="card-title" ><%= initiative.title %></h5> </a>
             <p class="card-text"><%= initiative.description %></p>
           </div>
           <div class="card-footer">

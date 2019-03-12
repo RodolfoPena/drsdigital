@@ -14,7 +14,19 @@
  *= require_self
  */
 
+@media only screen and (max-width:767px){
+  .title {
+    .row {
+      display: none;
+    }
 
+  }
+}
+.avatar-lg {
+  border-radius: 50%;
+  width: 55px;
+  padding:2px;
+}
 .avatar-sm {
   border-radius: 50%;
   width: 35px

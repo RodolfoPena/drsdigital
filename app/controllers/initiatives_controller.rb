@@ -20,6 +20,7 @@ class InitiativesController < ApplicationController
   # GET /initiatives/1
   # GET /initiatives/1.json
   def show
+     @timeline_commitments = @initiative.commitments.order(:due_date)
   end
 
   # GET /initiatives/new
@@ -51,7 +52,7 @@ class InitiativesController < ApplicationController
   def update
     respond_to do |format|
       if @initiative.update(initiative_params)
-        format.html { redirect_to @initiative, notice: 'Initiative was successfully updated.' }
+        format.html { redirect_to initiatives_path, notice: 'Initiative was successfully updated.' }
       else
         format.html { render :edit }
       end
@@ -61,6 +62,7 @@ class InitiativesController < ApplicationController
   # DELETE /initiatives/1
   # DELETE /initiatives/1.json
   def destroy
+    @initiative.commitments.destroy_all
     @initiative.destroy
     respond_to do |format|
       format.html { redirect_to initiatives_url, notice: 'Initiative was successfully destroyed.' }

@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     get 'dashboard'
   end
   resources :initiatives do
-    resources :commitments, controller: 'initiatives/commitments'
+    resources :commitments, controller: 'initiatives/commitments' do
+      member do
+          patch :complete
+      end
+    end
   end
   resources :commitments
   devise_for :users

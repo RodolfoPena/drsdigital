@@ -1,6 +1,6 @@
 class CommitmentsController < ApplicationController
   before_action :set_commitment, only: [:show, :edit, :update, :destroy]
-
+  include CommitmentsHelper
   # GET /commitments
   # GET /commitments.json
   def index
@@ -29,12 +29,11 @@ class CommitmentsController < ApplicationController
   def create
     @commitment = Commitment.new(commitment_params)
     @commitment.user = current_user
-    byebug
     @commitment.responsible_id = User.find(params[:commitment][:responsible_id].to_i).id
     @commitment.initiative = Initiative.find(params[:commitment][:initiative_id].to_i)
     @commitment.stage = params[:commitment][:stage].to_i
     @commitment.start_date = Date.today
-
+    @commitment.status = return_status(@commitment)
     respond_to do |format|
       if @commitment.save
         format.html { redirect_to @commitment, notice: 'Commitment was successfully created.' }
@@ -46,9 +45,15 @@ class CommitmentsController < ApplicationController
     end
   end
 
+  def complete
+    @commitment.update_attribute(:closing_date, Date.today)
+    @commitment.update_attribute(:status, return_status(@commitment))
+    redirect_to initiatives_path, notice: 'Comm,itment completed'
+  end
   # PATCH/PUT /commitments/1
   # PATCH/PUT /commitments/1.json
   def update
+    @commitment.status = return_status(@commitment)
     respond_to do |format|
       if @commitment.update(commitment_params)
         format.html { redirect_to @commitment, notice: 'Commitment was successfully updated.' }
@@ -78,6 +83,6 @@ class CommitmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def commitment_params
-      params.require(:commitment).permit(:action, :content, :start_date, :due_date, :deliverable, :critical)
+      params.require(:commitment).permit(:action, :content, :start_date, :due_date, :deliverable, :critical, :renegotiation_date, :closing_date)
     end
 end

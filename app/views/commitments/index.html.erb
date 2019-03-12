@@ -2,68 +2,193 @@
 <p id="notice"><%= notice %></p>
 <div class="container">
   <h1>Compromisos</h1>
-  <p class="lead">Iniciativas de mejora para los distintos procesos con foco en procesos estructurados, recolección de datos, precesamiento de datos, y análisis de datos</p>
-  <div class="col-auto" style="">
-  <h4 class="mr-2">Nuevo compromiso</h4>
-  <%= button_to new_commitment_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#commitment-add-modal'} do %>
-  <i class="material-icons">add</i>
-  <% end %>
-  <%= render 'commitments/new' %>
+  <div class="col-auto" style="display:inline-flex">
+    <h4 class="mr-2">Nuevo compromiso</h4>
+    <%= button_to new_commitment_path, remote: true, class:'btn btn-round', style:'display:inline-block', data: {toggle:'modal', target:'#commitment-add-modal'} do %>
+    <i class="material-icons">add</i>
+    <% end %>
+    <%= render 'commitments/new' %>
+  </div>
+  <br>
+  <br>
   <div class="row">
     <div class="col-md-2">
       <center>
-      <h5>Inventario</h5>
+      <h5>Inventario (<%= @commitments.where(status: 0).count %>)</h5>
       </center>
     </div>
     <div class="col-md-2">
       <center>
-      <h5>En espera</h5>
+      <h5>En espera (<%= @commitments.where(status: 1).count %>)</h5>
       </center>
     </div>
     <div class="col-md-2">
       <center>
-      <h5>Esta semana</h5>
+      <h5>Esta semana (<%= @commitments.where(status: 2).count %>)</h5>
       </center>
     </div>
     <div class="col-md-2">
       <center>
-      <h5>Hoy</h5>
+      <h5>Hoy (<%= @commitments.where(status: 3).count %>)</h5>
       </center>
     </div>
     <div class="col-md-2">
       <center>
-      <h5>Vencidos</h5>
+      <h5>Vencidos (<%= @commitments.where(status: 4).count %>)</h5>
       </center>
     </div>
     <div class="col-md-2">
       <center>
-      <h5>Cerrados</h5>
+      <h5>Cerrados (<%= @commitments.where(status: 5).count %>)</h5>
       </center>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2 bg-light">
-      <% current_user.commitments.where(status: nil, responsible_id: current_user.id).each do |commitment| %>
+  <div class="row" style="overflow-x: scroll !important">
+    <div class="col-md-2" style="max-height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 0).each do |commitment| %>
       <div class="commitment">
-        <div class="card">
+        <div class="card bg-light ">
+          <div class="card-body">
             <div class="dropdown card-options">
               <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="btn-sm">
-                    <i class="material-icons">more_vert</i>
-                </div>
+                <i class="material-icons">more_vert</i>
               </button>
               <div class="dropdown-menu dropdown-menu-right">
                 <%= link_to 'Ver', commitment, class:'dropdown-item' %>
-                <%= link_to 'Editar', commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
                 <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
               </div>
             </div>
-            <div class="card-body">
-            <p class="card-text"><%= commitment.action %></p>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
-          <div class="card-footer text-muted">
-            <%= distance_of_time_in_words(commitment.due_date, Date.today)%>
-            <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1' %>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2" style="max-height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 1).each do |commitment| %>
+      <div class="commitment">
+        <div class="card bg-light ">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2" style="max-height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 2).each do |commitment| %>
+      <div class="commitment">
+        <div class="card bg-light ">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2" style="height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 3).each do |commitment| %>
+      <div class="commitment">
+        <div class="card bg-light ">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2" style="height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 4).each do |commitment| %>
+      <div class="commitment">
+        <div class="card bg-light ">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <div class="col-md-2" style="height: 300px; overflow-y: scroll !important; background-color:#E0E0E0;">
+      <% @commitments.where(status: 5).each do |commitment| %>
+      <div class="commitment">
+        <div class="card bg-light ">
+          <div class="card-body">
+            <div class="dropdown card-options">
+              <button class="btn-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">more_vert</i>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right">
+                <%= link_to 'Ver', commitment, class:'dropdown-item' %>
+                <%= link_to 'Editar', edit_commitment_path(commitment), class:'dropdown-item'  %>
+                <%= link_to 'Eliminar', commitment_path(commitment), method: :delete, data: { confirm: 'Are you sure?' }, class:'dropdown-item text-danger'  %>
+              </div>
+            </div>
+            <p class="card-title"><%= commitment.action %></p>
+            <div class="card-footer text-muted">
+              <%= distance_of_time_in_words(commitment.due_date, Date.today)%> /
+              <%= image_tag user_avatar(commitment.responsible_id), class:'avatar-xs mr-1', 'data-toggle':"tooltip", 'data-placement':"top", title:"#{User.find(commitment.responsible_id).email}" %>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,7 @@
 class Initiatives::CommitmentsController < ApplicationController
-  before_action :set_commitment, only: [:show, :edit, :update, :destroy]
+  before_action :set_commitment, only: [:show, :edit, :update, :destroy, :complete]
+
+  include CommitmentsHelper
 
   # GET /commitments
   # GET /commitments.json
@@ -37,6 +39,12 @@ class Initiatives::CommitmentsController < ApplicationController
         format.html { render :new }
       end
     end
+  end
+
+  def complete
+    @commitment.update_attribute(:closing_date, Date.today)
+    @commitment.update_attribute(:status, return_status(@commitment))
+    redirect_to initiatives_path, notice: 'Comm,itment completed'
   end
 
   # PATCH/PUT /commitments/1
